@@ -1,0 +1,47 @@
+CC = cc
+CFLAGS = -Wall -Werror -Wextra
+DEBUG_FLAGS = -g
+NAME = philo
+
+# Dossiers
+SRC_DIR = srcs
+OBJ_DIR = objs
+
+# Fichiers sources
+SRC = philo.c \
+
+# Ajout des préfixes de dossiers
+SRC := $(addprefix $(SRC_DIR)/, $(SRC))
+OBJ := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
+
+# Cible principale
+all: $(NAME)
+
+# Compilation de l'exécutable
+$(NAME): $(OBJ)
+	@echo "🔨 Compiling..."
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	@echo -e "✅ \e[32mCompiled successfully!\e[0m"
+
+# Compilation des fichiers objets dans OBJ_DIR
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	@mkdir -p $(dir $@)
+	@echo "🔧 Compiling $<..."
+	@$(CC) $(CFLAGS) $(DEBUG_FLAGS) -c $< -o $@
+
+# Création du dossier OBJ_DIR si nécessaire
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
+
+# Nettoyage des fichiers objets et du dossier OBJ_DIR
+clean:
+	@echo -e "🧹 \e[33mCleaning .o of $(NAME)...\e[0m"
+	@rm -rf $(OBJ_DIR)
+
+# Nettoyage complet
+fclean: clean
+	@echo -e "🗑️ \e[33mDeleting $(NAME), ...\e[0m"
+	@rm -f $(NAME)
+
+# Rebuild complet
+re: fclean all
