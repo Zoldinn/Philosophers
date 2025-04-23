@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:26:22 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/04/23 11:26:43 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/04/23 17:16:30 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,51 @@
 # define GREEN "\e[32m"
 # define YELLOW "\e[33m"
 
-# include <string.h>
 # include <stdio.h>
+# include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <sys/time.h>
 # include <pthread.h>
+# include <sys/time.h>
+
+typedef enum e_state
+{
+	DEAD,
+	EATING,
+	SLEEPING,
+	THINKING,
+	TAKE_A_FORK
+}	t_state;
 
 typedef struct s_philo
 {
 	pthread_t	tid;
-	void		*data;
+	t_state		state;
+	int			starvation;
 }				t_philo;
 
 /**========================================================================
- **                            UTILS
+ **                            UTILS_PHILO
  *========================================================================**/
+
+int		end_philos(t_philo *philos);
+t_philo	*init_philos(int nbp, void *(routine)(void *));
+
+/**========================================================================
+ **                            UTILS_FUNCTIONS
+ *========================================================================**/
+
+int		ft_atoi(char *nb);
+int		ft_strlen(char *str);
+int		ft_cmpstr(char *s1, char *s2);
+void	*ft_calloc(size_t nmemb, size_t size);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+
+/**========================================================================
+ **                            ERRORS_HANDLING
+ *========================================================================**/
+
 void	print_error(char *str);
+int		args_errors_handler(int ac, char **av);
 
 #endif

@@ -1,22 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_func.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:18:50 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/04/23 11:57:55 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/04/23 16:58:09 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../philo.h"
 
-void	print_error(char *str)
+//compare 2 strings by length and char
+//0 if same
+//1 if different
+int	ft_cmpstr(char *s1, char *s2)
 {
-	if (!str)
-		return ;
-	printf("%sError : %s\n%s", RED, str, NC);
+	if (!s1 || !s2)
+		return (0);
+	if (ft_strlen(s1) == ft_strlen(s2))
+	{
+		if (ft_strncmp(s1, s2, ft_strlen(s1)) == 0)
+			return (0);
+	}
+	return (1);
+}
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	while (*s1 && *s2 && (*s1 == *s2) && n)
+	{
+		s1++;
+		s2++;
+		n--;
+	}
+	if (n == 0)
+		return (0);
+	return ((unsigned char) *s1 - (unsigned char) *s2);
+}
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
 
 int	ft_atoi(char *nb)
@@ -36,4 +67,17 @@ int	ft_atoi(char *nb)
 			res = (res * 10) + (nb[i] - '0');
 	}
 	return (res * neg);
+}
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*dst;
+
+	if (nmemb != 0 && size > (4294967295 / nmemb))
+		return (NULL);
+	dst = malloc(size * nmemb);
+	if (!dst)
+		return (NULL);
+	memset(dst, 0, nmemb * size);
+	return (dst);
 }

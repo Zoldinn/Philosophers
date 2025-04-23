@@ -7,7 +7,9 @@ SRC_DIR = srcs
 OBJ_DIR = objs
 
 # Fichiers sources
-SRC = utils.c \
+SRC = utils_func.c \
+	utils_philo.c \
+	errors_handler.c \
 	philo.c
 
 # Ajout des préfixes de dossiers
