@@ -1,6 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
-DEBUG_FLAGS = -g
+FLAGS = -Wall -Werror -Wextra -pthread -g
 NAME = philo
 
 # Dossiers
@@ -8,7 +7,8 @@ SRC_DIR = srcs
 OBJ_DIR = objs
 
 # Fichiers sources
-SRC = philo.c \
+SRC = utils.c \
+	philo.c
 
 # Ajout des préfixes de dossiers
 SRC := $(addprefix $(SRC_DIR)/, $(SRC))
@@ -24,14 +24,14 @@ banner:
 # Compilation de l'exécutable
 $(NAME): $(OBJ)
 	@echo "🔨 Compiling ..."
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
-	@echo "✅ \e[32mCompiled successfully!\e[0m"
+	@$(CC) $(FLAGS) $(OBJ) -o $(NAME)
+	@echo "✅ \e[32mCompiled successfully!\e[0m\n"
 
 # Compilation des fichiers objets dans OBJ_DIR
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	@mkdir -p $(dir $@)
 	@echo "🔧 Compiling $<..."
-	@$(CC) $(CFLAGS) $(DEBUG_FLAGS) -c $< -o $@
+	@$(CC) $(FLAGS) -c $< -o $@
 
 # Création du dossier OBJ_DIR si nécessaire
 $(OBJ_DIR):
@@ -44,7 +44,7 @@ clean:
 
 # Nettoyage complet
 fclean: clean
-	@echo "🗑️ \e[33m Deleting $(NAME), ...\e[0m"
+	@echo "🗑️ \e[33m Deleting $(NAME) ...\e[0m"
 	@rm -f $(NAME)
 
 # Rebuild complet
