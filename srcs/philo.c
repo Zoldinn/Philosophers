@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:24:57 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/04/23 17:19:40 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/04/24 09:11:34 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ int	main(int ac, char **av)
 	// 	return (1);
 	// if (end_philos(philos) != 0)
 	// 	return (1);
-	return (0);
+	return (printf("%sOK%s\n", GREEN, NC), 0);
 }

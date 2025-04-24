@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:22:08 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/04/23 18:21:23 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/04/24 09:16:14 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ void	print_error(char *str)
 {
 	if (!str)
 		return ;
-	printf("%sError : %s\n%s", RED, str, NC);
+	printf("%sError%s :\t%s\n", RED, NC, str);
 }
 
 // a big print, when there's not the good count of args when launching philo
 static void	print_error_arguments()
 {
-	printf("%sThere must be 4 to 5 arguments :%s\n\n", RED, NC);
-	printf("1 <number_philosophers>\n2 <time_to_die>\n3 <time_to_eat>\n");
-	printf("4 <time_to_sleep>\n5 <number_of_times_each_philosopher_eat>");
-	printf(" (optional)\n\n");
+	printf("%sError%s : args must be :\n", RED, NC);
+	printf("<nb_philos> <time_to_die> <time_to_eat> ");
+	printf("<time_to_sleep>\n%s<number_of_times_each_philosopher_eat>", BLUE);
+	printf(" (optional)\n%s", NC);
 }
 
 // check if args are numbers or if there at least a number (not just a + or -)
@@ -42,13 +42,13 @@ static int	are_args_numbers(int ac, char **av)
 		while (av[ac] && av[ac][++i])
 		{
 			if (!((av[ac][i] >= '0' && av[ac][i] <= '9')
-				|| av[ac][i] == '-' || av[ac][i] == '+'))
-				return (print_error("arguments must be numbers"), 1);
+				|| av[ac][i] == '+'))
+				return (print_error("arguments must be positives numbers"), 1);
 			if (av[ac][i] >= '0' && av[ac][i] <= '9')
 				is_digit += 1;
 		}
 		if (is_digit == 0)
-			return (print_error("arguments must be numbers"), 1);
+			return (print_error("arguments must be positives numbers"), 1);
 	}
 	return (0);
 }
@@ -57,6 +57,8 @@ static int	check_nonsense(int ac, char **av)
 {
 	while (--ac > 0)
 	{
+		if (ft_cmpstr(av[ac], "0") == 0)
+			return (1);
 		if (ft_cmpstr(av[ac], "+0") == 0 || ft_cmpstr(av[ac], "-0") == 0)
 			return (1);
 		if (ft_cmpstr(av[ac], "-2147483648") == 0)
@@ -86,8 +88,6 @@ int	args_errors_handler(int ac, char **av)
 		return (print_error_arguments(), 1);
 	if (are_args_numbers(ac, av) != 0)
 		return (1);
-	if (ft_atoi(av[1]) < 0)
-		return (print_error("nb_of_philos cannot be negative"), 1);
 	if (check_nonsense(ac, av) != 0)
 		return (print_error("don't enter a nonsense please..."), 1);
 	return (0);
