@@ -1,6 +1,5 @@
 #!/bin/bash
 
-make re
 
 YELLOW="\e[33m"
 GREEN="\e[32m"
@@ -10,17 +9,24 @@ NC="\e[0m"
 
 # Fichier de log
 LOGFILE=".philo_tests.log"
+
+# pour etre sur que le fichier soit vide
 echo "" > $LOGFILE
+
 # Vérifie les arguments passés au script
-if [[ "$1" == "--quiet" ]]; then
-	LOG= >> $LOGFILE
-else
-	LOG= | tee -a $LOGFILE
+QUIET="false"
+if [ "$1" == "--quiet" ]; then
+	QUIET=true
 fi
 
+if [ "$QUIET" = "false" ]; then
+	echo -e "\n=============== my philo tester ===============\n" | tee -a $LOGFILE
+	echo -e "$GREEN Should be good $NC" | tee -a $LOGFILE
+else
+	echo -e "\n=============== my philo tester ===============\n" >> $LOGFILE
+	echo -e "$GREEN Should be good $NC" >> $LOGFILE
+fi
 
-echo -e "\n=============== my philo tester ===============\n" $LOG
-echo -e "$GREEN Should be good $NC" $LOG
 # Tableau d'entrées à tester normalement bonnes
 inputs=(
 	"1 2 3 4 5"
@@ -28,12 +34,22 @@ inputs=(
 
 for args in "${inputs[@]}"
 do
-	echo "----- Test: ./philo $args -----" $LOG
-	./philo $args $LOG 2>&1
-	echo "" $LOG
+	if [ "$QUIET" = "false" ]; then
+		echo "----- Test: ./philo $args -----" | tee -a $LOGFILE
+		./philo $args | tee -a $LOGFILE 2>&1
+		echo "" | tee -a $LOGFILE
+	else
+		echo "----- Test: ./philo $args -----" >> $LOGFILE
+		./philo $args >> $LOGFILE 2>&1
+		echo "" >> $LOGFILE
+	fi
 done
 
-echo -e "$RED Should occured errors $NC" $LOG
+if [ "$QUIET" = "false" ]; then
+	echo -e "$RED Should occured errors $NC" | tee -a $LOGFILE
+else
+	echo -e "$RED Should occured errors $NC" >> $LOGFILE
+fi
 # Tableau d'entrées à tester normalement mauvaises
 inputs=(
 	"1 2 3 4 2147483647"
@@ -50,9 +66,15 @@ inputs=(
 
 for args in "${inputs[@]}"
 do
-	echo "----- Test: ./philo $args -----" $LOG
-	./philo $args $LOG 2>&1
-	echo "" $LOG
+	if [ "$QUIET" = "false" ]; then
+		echo "----- Test: ./philo $args -----" | tee -a $LOGFILE
+		./philo $args | tee -a $LOGFILE 2>&1
+		echo "" | tee -a $LOGFILE
+	else
+		echo "----- Test: ./philo $args -----" >> $LOGFILE
+		./philo $args >> $LOGFILE 2>&1
+		echo "" >> $LOGFILE
+	fi
 done
 
 echo "($LOGFILE created)"

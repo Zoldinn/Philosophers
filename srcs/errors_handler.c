@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:22:08 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/04/24 09:16:14 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:56:50 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int	check_nonsense(int ac, char **av)
 }
 
 // check all errors about args :
-// good count, only digits or signs, a positive nb of philos, are coherent
+// good count, only nb or signs, no neg values, are coherent
 // return 0 if it's ok
 int	args_errors_handler(int ac, char **av)
 {

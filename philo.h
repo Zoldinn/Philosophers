@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:26:22 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/04/23 17:16:30 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:28:00 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ typedef enum e_state
 typedef struct s_philo
 {
 	pthread_t	tid;
-	t_state		state;
-	int			starvation;
+	// t_state		state;
+	// int			starvation_time;
 }				t_philo;
 
 /**========================================================================
@@ -47,7 +47,7 @@ typedef struct s_philo
  *========================================================================**/
 
 int		end_philos(t_philo *philos);
-t_philo	*init_philos(int nbp, void *(routine)(void *));
+int		init_philos(t_philo *philos, int nbp, void *(ft)(void *), void *args);
 
 /**========================================================================
  **                            UTILS_FUNCTIONS
