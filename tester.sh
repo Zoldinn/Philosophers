@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+# couleurs
 YELLOW="\e[33m"
 GREEN="\e[32m"
 BLUE="\e[34m"
@@ -19,13 +19,16 @@ if [ "$1" == "--quiet" ]; then
 	QUIET=true
 fi
 
-if [ "$QUIET" = "false" ]; then
-	echo -e "\n=============== my philo tester ===============\n" | tee -a $LOGFILE
-	echo -e "$GREEN Should be good $NC" | tee -a $LOGFILE
-else
-	echo -e "\n=============== my philo tester ===============\n" >> $LOGFILE
-	echo -e "$GREEN Should be good $NC" >> $LOGFILE
-fi
+log() {
+	if [ "$QUIET" = "true" ]; then
+		echo -e "$1" >> $LOGFILE
+	else
+		echo -e "$1" | tee -a $LOGFILE
+	fi
+}
+
+log "\n=============== my philo tester ===============\n"
+log "$GREEN Should be good $NC"
 
 # Tableau d'entrées à tester normalement bonnes
 inputs=(
@@ -45,11 +48,7 @@ do
 	fi
 done
 
-if [ "$QUIET" = "false" ]; then
-	echo -e "$RED Should occured errors $NC" | tee -a $LOGFILE
-else
-	echo -e "$RED Should occured errors $NC" >> $LOGFILE
-fi
+log "$RED Should occured errors $NC"
 # Tableau d'entrées à tester normalement mauvaises
 inputs=(
 	"1 2 3 4 2147483647"

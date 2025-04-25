@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:26:22 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/04/24 15:27:59 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/04/25 19:01:13 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ typedef enum e_state
 	TAKE_A_FORK
 }	t_state;
 
-typedef struct s_philo
+/* typedef struct s_philo
 {
 	pthread_t	tid;
 	// t_state		state;
 	// int			starvation_time;
-}				t_philo;
+}				t_philo; */
 
 /**========================================================================
  **                            UTILS_PHILO
