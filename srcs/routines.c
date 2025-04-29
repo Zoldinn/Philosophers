@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:33:34 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/04/29 11:34:08 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/04/29 17:53:37 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ void	*philo_routine(void *arg)
 
 	pthread_mutex_lock(&w->print_mutex);
 	if (w->philo->fork[LEFT]->taken == 1 && w->philo->fork[RIGHT]->taken == 1)
+	{
+		
 		printf("philo %s%d%s is eating\n\n", RED, w->philo->id, NC);
+	}
 	pthread_mutex_unlock(&w->print_mutex);
 
 	w->philo->fork[RIGHT]->taken = 0;
