@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:26:22 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/04/29 11:46:12 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:26:57 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,27 +57,27 @@ typedef struct s_waiter
 }					t_waiter;
 
 /**========================================================================
- **                       PHILO MAIN FUNCTIONS
+ **							PHILO MAIN FUNCTIONS
  *========================================================================**/
 
 long	get_time();
 void	*philo_routine(void *arg);
 
 /**========================================================================
- **                            UTILS PHILO
+ **							INIT / END
  *========================================================================**/
 
-int		init_waiter(t_waiter *waiter, char **av);
+int		init(t_philo *philo, t_waiter *waiter, t_fork *fork, char **av);
+int		joins_and_destroys(t_waiter *waiter, t_philo **philo, t_fork **fork);
 
 /**========================================================================
- **                            UTILS PHILO
+ **							UTILS PHILO
  *========================================================================**/
 
-int		end_philos(t_philo *philos);
-int		init_philos(t_philo *philos, int nbp, void *(ft)(void *), void *args);
+long	get_time();
 
 /**========================================================================
- **                          UTILS FUNCTIONS
+ **							UTILS FUNCTIONS
  *========================================================================**/
 
 int		ft_atoi(char *nb);
@@ -87,7 +87,7 @@ void	*ft_calloc(size_t nmemb, size_t size);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 /**========================================================================
- **                           ERRORS HANDLING
+ **							ERRORS HANDLING
  *========================================================================**/
 
 void	print_error(char *str);
