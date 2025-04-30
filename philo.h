@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:26:22 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/04/29 15:26:57 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/04/30 11:36:26 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,18 @@ typedef struct s_fork
 	pthread_mutex_t	mutex;
 	int				id;
 	int				taken;
+	struct s_waiter	*waiter;
 }					t_fork;
 
 typedef struct s_philo
 {
-	pthread_t	thread;
-	int			id;
-	t_fork		*fork[2];
-	long		last_meal;
-	long		meal_count;
-}				t_philo;
+	pthread_t		thread;
+	int				id;
+	t_fork			*fork[2];
+	long			last_meal;
+	long			meal_count;
+	struct s_waiter	*waiter;
+}					t_philo;
 
 typedef struct s_waiter
 {
@@ -51,8 +53,8 @@ typedef struct s_waiter
 	int				mml;
 	int				die;
 	long			*starvation;
-	t_philo			*philo;
-	t_fork			*fork;
+	t_philo			**philo;
+	t_fork			**fork;
 	pthread_mutex_t	print_mutex;
 }					t_waiter;
 
@@ -67,7 +69,7 @@ void	*philo_routine(void *arg);
  **							INIT / END
  *========================================================================**/
 
-int		init(t_philo *philo, t_waiter *waiter, t_fork *fork, char **av);
+int		init(t_philo **philo, t_waiter *waiter, t_fork **fork, char **av);
 int		joins_and_destroys(t_waiter *waiter, t_philo **philo, t_fork **fork);
 
 /**========================================================================

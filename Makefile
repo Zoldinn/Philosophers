@@ -7,10 +7,12 @@ SRC_DIR = srcs
 OBJ_DIR = objs
 
 # Fichiers sources
-SRC = utils_func.c \
-	utils_philo.c \
-	errors_handler.c \
-	philo.c
+SRC = errors_handler.c \
+	init.c \
+	philo.c \
+	routines.c \
+	utils_func.c \
+	utils_philo.c
 
 # Ajout des préfixes de dossiers
 SRC := $(addprefix $(SRC_DIR)/, $(SRC))
