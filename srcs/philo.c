@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:28:21 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/04/30 11:34:31 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:16:53 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int ac, char **av)
 
 	philo = NULL;
 	fork = NULL;
-	if (args_errors_handler(ac, av) != 0) //todo: revoir car doit accepter ou reagir plus precis
+	if (args_errors_handler(ac, av) != 0) //todo: ajustements
 		return (1);
 	if (init(&philo, &waiter, &fork, av) != 0)
 		return (1);

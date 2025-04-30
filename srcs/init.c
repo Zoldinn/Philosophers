@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:45:16 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/04/30 12:13:40 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:24:07 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,15 @@
 static int	init_waiter(t_waiter *waiter, char **av)
 {
 	waiter->nbp = ft_atoi(av[1]);
-	waiter->mml = ft_atoi(av[4]);
-	waiter->starvation = ft_calloc(sizeof(long), waiter->nbp);
-	if (waiter->starvation == NULL)
-		return (print_error("starve allocation failed"), 1);
+	waiter->ttd = ft_atoi(av[2]);
+	waiter->tte = ft_atoi(av[3]);
+	waiter->tts = ft_atoi(av[4]);
+	waiter->mml = ft_atoi(av[5]);
+	waiter->stop = 0;
 	if (pthread_mutex_init(&waiter->print_mutex, NULL) != 0)
 		return (print_error("init print mutex failed"), 1);
+	if (pthread_create(&waiter->thread, NULL, waiter_routine, waiter) != 0)
+		return (print_error("failed create waiter thread"), 1);
 	return (0);
 }
 
@@ -45,7 +48,6 @@ static int	init_forks(t_fork **fork, t_waiter *waiter)
 		if (pthread_mutex_init(&((*fork)[i].mutex), NULL) != 0)
 			return (print_error("init forks mutex failed"), 1);
 		(*fork)[i].id = i;
-		(*fork)[i].taken = 0;
 		(*fork)[i].waiter = waiter;
 	}
 	return (0);
@@ -77,7 +79,7 @@ static int	init_philos(t_philo **philo, t_fork **fork, t_waiter *waiter)
 	i = -1;
 	while (++i < waiter->nbp)
 	{
-		if (pthread_create(&((*philo)[i].thread), NULL, philo_routine, *philo) != 0)
+		if (pthread_create(&((*philo)[i].thread), NULL, philo_routine, &(*philo)[i]) != 0)
 			return (print_error("failed create philo thread"), 1);
 	}
 	return (0);

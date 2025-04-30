@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:26:22 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/04/30 11:36:26 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:24:14 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef struct s_fork
 {
 	pthread_mutex_t	mutex;
 	int				id;
-	int				taken;
 	struct s_waiter	*waiter;
 }					t_fork;
 
@@ -49,10 +48,13 @@ typedef struct s_philo
 
 typedef struct s_waiter
 {
+	pthread_t		thread;
 	int				nbp;
+	int				ttd;
+	int				tte;
+	int				tts;
 	int				mml;
-	int				die;
-	long			*starvation;
+	int				stop;
 	t_philo			**philo;
 	t_fork			**fork;
 	pthread_mutex_t	print_mutex;
@@ -62,26 +64,16 @@ typedef struct s_waiter
  **							PHILO MAIN FUNCTIONS
  *========================================================================**/
 
-long	get_time();
 void	*philo_routine(void *arg);
-
-/**========================================================================
- **							INIT / END
- *========================================================================**/
-
+void	*waiter_routine(void *arg)
 int		init(t_philo **philo, t_waiter *waiter, t_fork **fork, char **av);
 int		joins_and_destroys(t_waiter *waiter, t_philo **philo, t_fork **fork);
 
 /**========================================================================
- **							UTILS PHILO
+ **							UTILS
  *========================================================================**/
 
 long	get_time();
-
-/**========================================================================
- **							UTILS FUNCTIONS
- *========================================================================**/
-
 int		ft_atoi(char *nb);
 int		ft_strlen(char *str);
 int		ft_cmpstr(char *s1, char *s2);
