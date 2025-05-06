@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:45:16 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/04/30 16:24:07 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/06 10:57:03 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,21 @@
 ** starvation = time until they die
 ** and finally create the mutex for print
 **/
-static int	init_waiter(t_waiter *waiter, char **av)
+static int	init_waiter(t_waiter *waiter, char **av, t_philo **philo, t_fork **fork)
 {
-	waiter->nbp = ft_atoi(av[1]);
 	waiter->ttd = ft_atoi(av[2]);
 	waiter->tte = ft_atoi(av[3]);
 	waiter->tts = ft_atoi(av[4]);
-	waiter->mml = ft_atoi(av[5]);
+	waiter->mml = -1;
+	if (av[5])
+		waiter->mml = ft_atoi(av[5]);
 	waiter->stop = 0;
 	if (pthread_mutex_init(&waiter->print_mutex, NULL) != 0)
 		return (print_error("init print mutex failed"), 1);
 	if (pthread_create(&waiter->thread, NULL, waiter_routine, waiter) != 0)
 		return (print_error("failed create waiter thread"), 1);
+	waiter->philo = philo;
+	waiter->fork = fork;
 	return (0);
 }
 
@@ -89,15 +92,12 @@ static int	init_philos(t_philo **philo, t_fork **fork, t_waiter *waiter)
 // the waiter (thread), forks (mutex), philos (threads)
 int	init(t_philo **philo, t_waiter *waiter, t_fork **fork, char **av)
 {
-	if (init_waiter(waiter, av) != 0)
-		return (1);
-	printf("nbp = %d\n", waiter->nbp);
 	if (init_forks(fork, waiter) != 0)
 		return (1);
 	if (init_philos(philo, fork, waiter) != 0)
 		return (1);
-	waiter->philo = philo;
-	waiter->fork = fork;
+	if (init_waiter(waiter, av, philo, fork) != 0)
+		return (1);
 	return (0);
 }
 

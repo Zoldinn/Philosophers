@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:33:34 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/04/30 16:33:41 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/06 10:36:31 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	*waiter_routine(void *arg)
 		{
 			philo = &waiter->philo[0][i];
 			if ((philo->last_meal - get_time()) > waiter->ttd
-				|| philo->meal_count >= waiter->mml)
+				|| (waiter->mml >= 0 && philo->meal_count >= waiter->mml))
 			{
 				waiter->stop += 1;
 				break ;

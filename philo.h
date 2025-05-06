@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:26:22 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/04/30 16:24:14 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/06 10:35:52 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_waiter
  *========================================================================**/
 
 void	*philo_routine(void *arg);
-void	*waiter_routine(void *arg)
+void	*waiter_routine(void *arg);
 int		init(t_philo **philo, t_waiter *waiter, t_fork **fork, char **av);
 int		joins_and_destroys(t_waiter *waiter, t_philo **philo, t_fork **fork);
 

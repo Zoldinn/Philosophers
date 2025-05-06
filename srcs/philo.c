@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:28:21 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/04/30 14:16:53 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/06 10:46:34 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,12 @@ int	main(int ac, char **av)
 	fork = NULL;
 	if (args_errors_handler(ac, av) != 0) //todo: ajustements
 		return (1);
+	waiter.nbp = ft_atoi(av[1]);
 	if (init(&philo, &waiter, &fork, av) != 0)
 		return (1);
 	if (joins_and_destroys(&waiter, &philo, &fork) != 0)
 		return (1);
+	free(philo);
+	free(fork);
 	return (0);
 }
