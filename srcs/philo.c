@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:28:21 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/07 17:41:01 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/07 19:24:54 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,7 @@ void	*routine(void *arg)
 	philo = (t_philo *) arg;
 	while (!philo->waiter->stop)
 	{
-		pthread_mutex_lock(&philo->fork[LEFT]->mutex);
-		pthread_mutex_lock(&philo->waiter->print_mutex);
-		printf("philo %s%d%s take fork %s%d%s\n", RED, philo->id, NC, RED, philo->fork[LEFT]->id, NC);
-		pthread_mutex_unlock(&philo->waiter->print_mutex);
-	
-		pthread_mutex_lock(&philo->fork[RIGHT]->mutex);
-		pthread_mutex_lock(&philo->waiter->print_mutex);
-		printf("philo %s%d%s take fork %s%d%s\n", RED, philo->id, NC, RED, philo->fork[RIGHT]->id, NC);
-		pthread_mutex_unlock(&philo->waiter->print_mutex);
-	
-		pthread_mutex_lock(&philo->waiter->print_mutex);
-		philo->last_meal = get_time();
-		philo->meal_count += 1;
-		printf("philo %s%d%s is %seating%s\n", RED, philo->id, NC, BLUE, NC);
-		pthread_mutex_unlock(&philo->waiter->print_mutex);
-	
-		pthread_mutex_unlock(&philo->fork[RIGHT]->mutex);
-		pthread_mutex_unlock(&philo->fork[LEFT]->mutex);
+		
 	}
 	return (NULL);
 }
@@ -55,7 +38,7 @@ int	waiter_monitoring(t_waiter *waiter)
 	{
 		philo = &((*philos)[i]);
 		if (pthread_mutex_lock(&philo->last_meal_mutex) != 0)
-			return (print_error("Failed lock mutex last_meal"), 1);
+			return (p_r("Failed lock mutex last_meal"), 1);
 		if ((waiter->mml && philo->meal_count >= waiter->mml)
 			|| (philo->last_meal + waiter->tte >= waiter->ttd))
 		{
@@ -63,11 +46,12 @@ int	waiter_monitoring(t_waiter *waiter)
 			return (0);
 		}
 		if (pthread_mutex_unlock(&philo->last_meal_mutex) != 0)
-			return (print_error("Failed lock mutex last_meal"), 1);
+			return (p_r("Failed lock mutex last_meal"), 1);
 	}
 	return (0);
 }
 
+//todo: reaplce printf par write 
 int	main(int ac, char **av)
 {
 	t_waiter	waiter;
@@ -87,7 +71,7 @@ int	main(int ac, char **av)
 		if (waiter_monitoring(&waiter) != 0)
 			return (1);
 	}
-	if (end(&waiter, &philo, &fork) != 0)
+	if (end(&waiter, &philo, &fork) != 0) //todo: ameliorations
 		return (1);
 	free(philo);
 	free(fork);

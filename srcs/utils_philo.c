@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:07:40 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/04/29 15:37:23 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/07 18:01:56 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,3 +22,5 @@ long	get_time()
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 }
+
+int	log()

@@ -6,14 +6,14 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:22:08 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/07 15:53:25 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/07 19:19:33 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
 // print str in red
-void	print_error(char *str)
+void	p_r(char *str)
 {
 	if (!str)
 		return ;
@@ -43,12 +43,12 @@ int	are_args_numbers(int ac, char **av)
 		{
 			if (!((av[ac][i] >= '0' && av[ac][i] <= '9')
 				|| av[ac][i] == '+'))
-				return (print_error("arguments must be positives numbers"), 1);
+				return (p_r("arguments must be positives numbers"), 1);
 			if (av[ac][i] >= '0' && av[ac][i] <= '9')
 				is_digit += 1;
 		}
 		if (is_digit == 0)
-			return (print_error("arguments must be positives numbers"), 1);
+			return (p_r("arguments must be positives numbers"), 1);
 	}
 	return (0);
 }
@@ -89,6 +89,6 @@ int	args_errors_handler(int ac, char **av)
 	if (are_args_numbers(ac, av) != 0)
 		return (1);
 	if (check_nonsense(ac, av) != 0)
-		return (print_error("don't enter a nonsense please..."), 1);
+		return (p_r("don't enter a nonsense please..."), 1);
 	return (0);
 }

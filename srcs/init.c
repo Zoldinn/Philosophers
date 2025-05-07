@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:45:16 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/07 16:30:19 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/07 19:19:33 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	init_forks(t_fork **fork, t_waiter *waiter)
 
 	*fork = ft_calloc(sizeof(t_fork), waiter->nbp);
 	if (!(*fork))
-		return (print_error("forks allocation failed"), 1);
+		return (p_r("forks allocation failed"), 1);
 	i = -1;
 	while (++i < waiter->nbp)
 	{
@@ -52,7 +52,7 @@ int	init_philos(t_philo **philo, t_fork **fork, t_waiter *waiter)
 
 	*philo = ft_calloc(sizeof(t_philo), waiter->nbp);
 	if (!(*philo))
-		return (print_error("philos allocation failed"), 1);
+		return (p_r("philos allocation failed"), 1);
 	i = -1;
 	while (++i < waiter->nbp)
 	{

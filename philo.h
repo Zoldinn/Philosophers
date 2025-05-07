@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:26:22 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/07 16:02:53 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/07 19:19:33 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 typedef struct s_fork
 {
 	pthread_mutex_t	mutex;
+	int				created_m;
 	int				id;
 	struct s_waiter	*waiter;
 }					t_fork;
@@ -41,10 +42,12 @@ typedef struct s_philo
 	int				id;
 	t_fork			*fork[2];
 	pthread_t		thread;
+	int				created_t;
 	int				is_dead;
 	long			meal_count;
 	long			last_meal;
 	pthread_mutex_t	last_meal_mutex;
+	int				created_m;
 	struct s_waiter	*waiter;
 }					t_philo;
 
@@ -62,9 +65,12 @@ typedef struct s_waiter
 	int				mml;
 	int				start;
 	int				stop;
+	long			begin_time;
+	long			actual_time;
 	t_philo			**philo;
 	t_fork			**fork;
 	pthread_mutex_t	print_mutex;
+	int				created_m;
 }					t_waiter;
 
 /**========================================================================
@@ -91,7 +97,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
  **							ERRORS HANDLING
  *========================================================================**/
 
-void	print_error(char *str);
+void	p_r(char *str);
 int		args_errors_handler(int ac, char **av);
 
 #endif
