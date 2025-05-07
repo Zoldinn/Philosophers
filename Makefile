@@ -9,8 +9,8 @@ OBJ_DIR = objs
 # Fichiers sources
 SRC = errors_handler.c \
 	init.c \
+	init2.c \
 	philo.c \
-	routines.c \
 	utils_func.c \
 	utils_philo.c
 

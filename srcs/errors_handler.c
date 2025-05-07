@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:22:08 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/04/24 15:18:42 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/07 15:53:25 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_error(char *str)
 }
 
 // a big print, when there's not the good count of args when launching philo
-static void	print_error_arguments()
+void	print_error_arguments()
 {
 	printf("%sError%s : args must be :\n", RED, NC);
 	printf("<nb_philos> <time_to_die> <time_to_eat> ");
@@ -30,7 +30,7 @@ static void	print_error_arguments()
 }
 
 // check if args are numbers or if there at least a number (not just a + or -)
-static int	are_args_numbers(int ac, char **av)
+int	are_args_numbers(int ac, char **av)
 {
 	int	i;
 	int	is_digit;
@@ -53,7 +53,7 @@ static int	are_args_numbers(int ac, char **av)
 	return (0);
 }
 
-static int	check_nonsense(int ac, char **av)
+int	check_nonsense(int ac, char **av)
 {
 	while (--ac > 0)
 	{

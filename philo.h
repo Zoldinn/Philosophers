@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:26:22 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/06 10:35:52 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:02:53 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,29 @@ typedef struct s_fork
 
 typedef struct s_philo
 {
-	pthread_t		thread;
 	int				id;
 	t_fork			*fork[2];
-	long			last_meal;
+	pthread_t		thread;
+	int				is_dead;
 	long			meal_count;
+	long			last_meal;
+	pthread_mutex_t	last_meal_mutex;
 	struct s_waiter	*waiter;
 }					t_philo;
 
+// nbp : nb philo
+// ttd : time to die
+// tte : time to eat
+// tts : time to sleep
+// mml : max meal / max amount of meal
 typedef struct s_waiter
 {
-	pthread_t		thread;
 	int				nbp;
 	int				ttd;
 	int				tte;
 	int				tts;
 	int				mml;
+	int				start;
 	int				stop;
 	t_philo			**philo;
 	t_fork			**fork;
@@ -64,10 +71,10 @@ typedef struct s_waiter
  **							PHILO MAIN FUNCTIONS
  *========================================================================**/
 
-void	*philo_routine(void *arg);
-void	*waiter_routine(void *arg);
 int		init(t_philo **philo, t_waiter *waiter, t_fork **fork, char **av);
-int		joins_and_destroys(t_waiter *waiter, t_philo **philo, t_fork **fork);
+int		start(t_waiter *waiter);
+int		end(t_waiter *waiter, t_philo **philo, t_fork **fork);
+void	*routine(void *arg);
 
 /**========================================================================
  **							UTILS
