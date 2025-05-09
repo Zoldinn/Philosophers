@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:26:22 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/09 11:21:41 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:43:40 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,14 @@ typedef struct s_waiter
 	int				tts;
 	int				mml;
 	int				start;
+	pthread_mutex_t	start_mutex;
+	int				created_m_s;
 	int				stop;
 	long			time;
-	pthread_mutex_t	time_mutex;
-	int				created_tm;
 	t_philo			**philo;
 	t_fork			**fork;
 	pthread_mutex_t	print_mutex;
-	int				created_pm;
+	int				created_m_p;
 }					t_waiter;
 
 /**========================================================================
@@ -91,17 +91,19 @@ int		init(t_philo **philo, t_waiter *waiter, t_fork **fork, char **av);
 int		start(t_waiter *waiter);
 int		end(t_waiter *waiter, t_philo **philo, t_fork **fork);
 void	*routine(void *arg);
+long	get_time();
+int		log(t_waiter *waiter, t_state state, int philo_id, int waiting);
 
 /**========================================================================
  **							UTILS
  *========================================================================**/
 
-long	get_time();
 int		ft_atoi(char *nb);
 int		ft_strlen(char *str);
 int		ft_cmpstr(char *s1, char *s2);
 void	*ft_calloc(size_t nmemb, size_t size);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+void	ft_putnbr(long nb);
 
 /**========================================================================
  **							ERRORS HANDLING

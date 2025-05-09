@@ -6,13 +6,12 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:07:40 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/09 12:24:56 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:43:14 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-// Return a long bc time is a from 1970 in sec so it's very big
 // return the time is ms (milisec)
 // to have actual time (time start - actual time)
 long	get_time()
@@ -38,14 +37,27 @@ void	ft_putnbr(long nb)
 	write(1, &res, 1);
 }
 
-int	log(t_waiter *waiter, t_state state, t_philo philo, t_fork fork)
+int	log(t_waiter *waiter, t_state state, int philo_id, int waiting)
 {
-	//? mutex?
+	if (pthread_mutex_lock(&waiter->print_mutex) != 0)
+		return (p_r("Failed lock print mutex"), 1);
+	ft_putnbr(waiter->time);
+	write(1, YELLOW, 6);
+	write(1, " ", 1);
+	ft_putnbr(philo_id);
+	write(1, NC, 5);
 	if (state == TAKE_A_FORK)
-	{
-		write(1, YELLOW, 6);
-		ft_putnbr(philo.id);
-		write(1, NC, 5);
-		
-	}
+		write(1, " has taken a fork\n", 18);
+	else if (state == EAT)
+		write(1, " is eating\n", 11);
+	else if (state == THINK)
+		write(1, " is thinking\n", 13);
+	else if (state == SLEEP)
+		write(1, " is sleeping\n", 13);
+	else if (state == DIE)
+		write(1, " died\n", 6);
+	usleep(waiting);
+	if (pthread_mutex_unlock(&waiter->print_mutex) != 0)
+		return (p_r("Failed unlock print mutex"), 1);
+	return (0);
 }

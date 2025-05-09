@@ -6,22 +6,18 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:54:22 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/09 11:16:08 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:06:06 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-int	create_all_mutex(t_waiter *waiter)
+int	create_all_mutex(t_waiter *waiter, t_philo **philos, t_fork **forks)
 {
 	int		i;
-	t_philo	**philos;
-	t_fork	**forks;
 	t_philo	*philo;
 	t_fork	*fork;
 
-	philos = waiter->philo;
-	forks = waiter->fork;
 	i = -1;
 	while (++i < waiter->nbp)
 	{
@@ -32,10 +28,13 @@ int	create_all_mutex(t_waiter *waiter)
 		if (pthread_mutex_init(&philo->last_meal_mutex, NULL) != 0)
 			return (p_r("failed init meal mutex"), philo->created_m = 0, 1);
 		if (pthread_mutex_init(&waiter->print_mutex, NULL) != 0)
-			return (p_r("failed init print mutex"), waiter->created_m = 0, 1);
+			return (p_r("failed init print mutex"), waiter->created_m_p = 0, 1);
+		if (pthread_mutex_init(&waiter->start_mutex, NULL) != 0)
+			return (p_r("failed init start mutex"), waiter->created_m_s = 0, 1);
 		fork->created_m = 1;
 		philo->created_m = 1;
-		waiter->created_m = 1;
+		waiter->created_m_p = 1;
+		waiter->created_m_s = 1;
 	}
 	return (0);
 }
@@ -51,7 +50,7 @@ int	start_philos_threads(t_waiter *waiter)
 	while (++i < waiter->nbp)
 	{
 		philo = &((*philos)[i]);
-		if (pthread_create(&philo->thread, NULL, routine, philo) != 0)
+		if (pthread_create(&philo->thread, NULL, routine, waiter) != 0)
 			return (p_r("failed create philo thread"), philo->created_t = 0, 1);
 		philo->created_t = 1;
 	}
@@ -61,10 +60,15 @@ int	start_philos_threads(t_waiter *waiter)
 // Create all mutex and start philos threads
 int	start(t_waiter *waiter)
 {
-	if (create_all_mutex(waiter) != 0)
+	if (create_all_mutex(waiter, waiter->philo, waiter->fork) != 0)
 		return (1);
 	if (start_philos_threads(waiter) != 0)
 		return (1);
+	if (pthread_mutex_lock(&waiter->start_mutex) != 0)
+		return (p_r("Failed lock start mutex"), 1);
+	waiter->start = 1;
+	if (pthread_mutex_unlock(&waiter->start_mutex) != 0)
+		return (p_r("Failed unlock start mutex"), 1);
 	return (0);
 }
 
@@ -92,9 +96,7 @@ int	end(t_waiter *waiter, t_philo **philo, t_fork **fork)
 		if (pthread_mutex_destroy(&((*philo)[i].last_meal_mutex)) != 0)
 			return (p_r("failed to destroy fork's mutex"), 1);
 	}
-	if (waiter->created_pm && pthread_mutex_destroy(&waiter->print_mutex) != 0)
+	if (waiter->created_m_p && pthread_mutex_destroy(&waiter->print_mutex) != 0)
 		return (p_r("failed detroy print mutex"), 1);
-	if (waiter->created_tm && pthread_mutex_destroy(&waiter->time_mutex) != 0)
-		return (p_r("failed detroy time mutex"), 1);
 	return (0);
 }
