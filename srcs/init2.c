@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:54:22 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/07 19:23:29 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:16:08 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	create_all_mutex(t_waiter *waiter)
 	t_philo	*philo;
 	t_fork	*fork;
 
-	philo = waiter->philo;
-	fork = waiter->fork;
+	philos = waiter->philo;
+	forks = waiter->fork;
 	i = -1;
 	while (++i < waiter->nbp)
 	{
@@ -51,7 +51,7 @@ int	start_philos_threads(t_waiter *waiter)
 	while (++i < waiter->nbp)
 	{
 		philo = &((*philos)[i]);
-		if (pthread_create(philo->thread, NULL, routine, philo) != 0)
+		if (pthread_create(&philo->thread, NULL, routine, philo) != 0)
 			return (p_r("failed create philo thread"), philo->created_t = 0, 1);
 		philo->created_t = 1;
 	}
@@ -92,7 +92,9 @@ int	end(t_waiter *waiter, t_philo **philo, t_fork **fork)
 		if (pthread_mutex_destroy(&((*philo)[i].last_meal_mutex)) != 0)
 			return (p_r("failed to destroy fork's mutex"), 1);
 	}
-	if (waiter->created_m && pthread_mutex_destroy(&waiter->print_mutex) != 0)
+	if (waiter->created_pm && pthread_mutex_destroy(&waiter->print_mutex) != 0)
 		return (p_r("failed detroy print mutex"), 1);
+	if (waiter->created_tm && pthread_mutex_destroy(&waiter->time_mutex) != 0)
+		return (p_r("failed detroy time mutex"), 1);
 	return (0);
 }

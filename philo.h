@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:26:22 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/07 19:19:33 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:21:41 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,15 @@
 
 # define LEFT 0
 # define RIGHT 1
+
+typedef enum e_state
+{
+	TAKE_A_FORK,
+	EAT,
+	SLEEP,
+	THINK,
+	DIE
+}	t_state;
 
 typedef struct s_fork
 {
@@ -65,12 +74,13 @@ typedef struct s_waiter
 	int				mml;
 	int				start;
 	int				stop;
-	long			begin_time;
-	long			actual_time;
+	long			time;
+	pthread_mutex_t	time_mutex;
+	int				created_tm;
 	t_philo			**philo;
 	t_fork			**fork;
 	pthread_mutex_t	print_mutex;
-	int				created_m;
+	int				created_pm;
 }					t_waiter;
 
 /**========================================================================

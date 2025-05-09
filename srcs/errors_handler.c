@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:22:08 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/07 19:19:33 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:10:14 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@ void	p_r(char *str)
 {
 	if (!str)
 		return ;
-	printf("%sError%s :\t%s\n", RED, NC, str);
+	write(2, RED, 6);
+	write(2, "ERROR", 5);
+	write(2, NC, 5);
+	write(2, str, ft_strlen(str));
+	write(2, "\n", 1);
 }
 
 // a big print, when there's not the good count of args when launching philo

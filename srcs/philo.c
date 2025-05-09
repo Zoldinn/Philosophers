@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:28:21 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/07 19:24:54 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:18:52 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 // last meal 			: avant de manger
 // commencer starvation : juste apres manger
+// 
+// doivent tous commencer en meme temps
 void	*routine(void *arg)
 {
 	t_philo	*philo;
@@ -32,6 +34,7 @@ int	waiter_monitoring(t_waiter *waiter)
 	t_philo	*philo;
 	int		i;
 
+	waiter->time = get_time();
 	philos = waiter->philo;
 	i = -1;
 	while (++i < waiter->nbp)
@@ -63,7 +66,6 @@ int	main(int ac, char **av)
 	if (args_errors_handler(ac, av) != 0) //todo: ajustements
 		return (1);
 	waiter.nbp = ft_atoi(av[1]);
-	//todo : start : gerer cas ou un echou -> libere/free precedents
 	if (init(&philo, &waiter, &fork, av) != 0 || start(&waiter) != 0)
 		return (1);
 	while (!waiter.stop)
@@ -71,7 +73,7 @@ int	main(int ac, char **av)
 		if (waiter_monitoring(&waiter) != 0)
 			return (1);
 	}
-	if (end(&waiter, &philo, &fork) != 0) //todo: ameliorations
+	if (end(&waiter, &philo, &fork) != 0) //? ameliorations?
 		return (1);
 	free(philo);
 	free(fork);
