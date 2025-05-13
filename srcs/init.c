@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:45:16 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/07 19:19:33 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:27:19 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ int	init_waiter(t_waiter *waiter, char **av, t_philo **philo, t_fork **fork)
 	waiter->ttd = ft_atoi(av[2]);
 	waiter->tte = ft_atoi(av[3]);
 	waiter->tts = ft_atoi(av[4]);
+	if ((waiter->ttd - (waiter->tte + waiter->tts)) > 0)
+		waiter->ttt = waiter->ttd - (waiter->tte + waiter->tts);
+	else
+		waiter->ttt = 0;
 	waiter->mml = -1;
 	if (av[5])
 		waiter->mml = ft_atoi(av[5]);

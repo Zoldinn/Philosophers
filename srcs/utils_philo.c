@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:07:40 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/09 18:43:14 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:40:52 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,9 @@ void	ft_putnbr(long nb)
 	write(1, &res, 1);
 }
 
-int	log(t_waiter *waiter, t_state state, int philo_id, int waiting)
+int	ft_log(t_waiter *waiter, t_state state, int philo_id, int waiting)
 {
-	if (pthread_mutex_lock(&waiter->print_mutex) != 0)
-		return (p_r("Failed lock print mutex"), 1);
+	pthread_mutex_lock(&waiter->print_mutex);
 	ft_putnbr(waiter->time);
 	write(1, YELLOW, 6);
 	write(1, " ", 1);
@@ -56,8 +55,9 @@ int	log(t_waiter *waiter, t_state state, int philo_id, int waiting)
 		write(1, " is sleeping\n", 13);
 	else if (state == DIE)
 		write(1, " died\n", 6);
+	else if (state == ENOUGH)
+		write(1, " eaten enough\n", 14);
 	usleep(waiting);
-	if (pthread_mutex_unlock(&waiter->print_mutex) != 0)
-		return (p_r("Failed unlock print mutex"), 1);
+	pthread_mutex_unlock(&waiter->print_mutex);
 	return (0);
 }

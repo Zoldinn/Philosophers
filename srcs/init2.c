@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:54:22 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/09 18:06:06 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:44:38 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,10 @@ int	start(t_waiter *waiter)
 		return (1);
 	if (start_philos_threads(waiter) != 0)
 		return (1);
-	if (pthread_mutex_lock(&waiter->start_mutex) != 0)
-		return (p_r("Failed lock start mutex"), 1);
+	pthread_mutex_lock(&waiter->start_mutex);
 	waiter->start = 1;
-	if (pthread_mutex_unlock(&waiter->start_mutex) != 0)
-		return (p_r("Failed unlock start mutex"), 1);
+	waiter->start_time = get_time();
+	pthread_mutex_unlock(&waiter->start_mutex);
 	return (0);
 }
 

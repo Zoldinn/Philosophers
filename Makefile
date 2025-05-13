@@ -11,6 +11,7 @@ SRC = errors_handler.c \
 	init.c \
 	init2.c \
 	philo.c \
+	routine.c \
 	utils_func.c \
 	utils_philo.c
 

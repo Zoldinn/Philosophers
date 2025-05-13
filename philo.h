@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:26:22 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/09 18:43:40 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:43:39 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ typedef enum e_state
 	EAT,
 	SLEEP,
 	THINK,
-	DIE
+	DIE,
+	ENOUGH
 }	t_state;
 
 typedef struct s_fork
@@ -64,6 +65,7 @@ typedef struct s_philo
 // ttd : time to die
 // tte : time to eat
 // tts : time to sleep
+// ttt : time to think
 // mml : max meal / max amount of meal
 typedef struct s_waiter
 {
@@ -71,12 +73,14 @@ typedef struct s_waiter
 	int				ttd;
 	int				tte;
 	int				tts;
+	int				ttt;
 	int				mml;
 	int				start;
 	pthread_mutex_t	start_mutex;
 	int				created_m_s;
 	int				stop;
 	long			time;
+	long			start_time;
 	t_philo			**philo;
 	t_fork			**fork;
 	pthread_mutex_t	print_mutex;
@@ -92,7 +96,7 @@ int		start(t_waiter *waiter);
 int		end(t_waiter *waiter, t_philo **philo, t_fork **fork);
 void	*routine(void *arg);
 long	get_time();
-int		log(t_waiter *waiter, t_state state, int philo_id, int waiting);
+int		ft_log(t_waiter *waiter, t_state state, int philo_id, int waiting);
 
 /**========================================================================
  **							UTILS
