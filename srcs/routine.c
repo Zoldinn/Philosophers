@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 19:05:03 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/13 11:42:35 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/13 17:40:25 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,46 +14,40 @@
 
 void	wait_start(t_waiter *waiter)
 {
-	pthread_mutex_lock(&waiter->start_mutex);
+	pthread_mutex_lock(&waiter->mutex);
 	while (!waiter->start)
 	{
-		pthread_mutex_unlock(&waiter->start_mutex);
+		pthread_mutex_unlock(&waiter->mutex);
 		usleep(100);
-		pthread_mutex_lock(&waiter->start_mutex);
+		pthread_mutex_lock(&waiter->mutex);
 	}
-	pthread_mutex_unlock(&waiter->start_mutex);
+	pthread_mutex_unlock(&waiter->mutex);
 }
 
-void	go_eat(t_philo *philo, int i)
+void	go_eat(t_philo *philo)
 {
-	if (i % 2 == 0)
+	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(&philo->fork[LEFT]->mutex);
 		ft_log(philo->waiter, TAKE_A_FORK, philo->id, 0);
 		pthread_mutex_lock(&philo->fork[RIGHT]->mutex);
 		ft_log(philo->waiter, TAKE_A_FORK, philo->id, 0);
-		pthread_mutex_lock(&philo->last_meal_mutex);
-		philo->last_meal = get_time();
-		philo->meal_count++;
-		ft_log(philo->waiter, EAT, philo->id, philo->waiter->tte);
-		pthread_mutex_unlock(&philo->last_meal_mutex);
-		pthread_mutex_unlock(&philo->fork[LEFT]->mutex);
-		pthread_mutex_unlock(&philo->fork[RIGHT]->mutex);
 	}
 	else
 	{
-		pthread_mutex_lock(&philo->fork[LEFT]->mutex);
-		ft_log(philo->waiter, TAKE_A_FORK, philo->id, 0);
 		pthread_mutex_lock(&philo->fork[RIGHT]->mutex);
 		ft_log(philo->waiter, TAKE_A_FORK, philo->id, 0);
-		pthread_mutex_lock(&philo->last_meal_mutex);
-		philo->last_meal = get_time();
-		philo->meal_count++;
-		ft_log(philo->waiter, EAT, philo->id, philo->waiter->tte);
-		pthread_mutex_unlock(&philo->last_meal_mutex);
-		pthread_mutex_unlock(&philo->fork[LEFT]->mutex);
-		pthread_mutex_unlock(&philo->fork[RIGHT]->mutex);
+		pthread_mutex_lock(&philo->fork[LEFT]->mutex);
+		ft_log(philo->waiter, TAKE_A_FORK, philo->id, 0);
 	}
+	philo_lock(1, philo);
+	philo->last_meal = philo->waiter->time;
+	philo->meal_count++;
+	ft_log(philo->waiter, EAT, philo->id, philo->waiter->tte);
+	philo_lock(0, philo);
+
+	pthread_mutex_unlock(&philo->fork[LEFT]->mutex);
+	pthread_mutex_unlock(&philo->fork[RIGHT]->mutex);
 }
 
 // last meal 			: avant de manger
@@ -63,20 +57,28 @@ void	go_eat(t_philo *philo, int i)
 void	*routine(void *arg)
 {
 	t_waiter	*waiter;
-	t_philo		**philos;
 	t_philo		*philo;
-	int			i;
 
-	waiter = (t_waiter *) arg;
-	philos = waiter->philo;
+	philo = (t_philo *) arg;
+	waiter = philo->waiter;
+
 	wait_start(waiter);
-	i = -1;
-	while (!waiter->stop && i < waiter->nbp)
+
+	waiter_lock(1, waiter);
+	while (!waiter->stop)
 	{
-		philo = &((*philos)[++i]);
-		go_eat(philo, i);
-		ft_log(waiter, THINK, philo->id, waiter->ttt);
+		waiter_lock(0, waiter);
+		philo_lock(1, philo);
+		if (waiter->mml && philo->meal_count >= waiter->mml)
+		{
+			philo->eaten_enough = 1;
+			return (waiter_lock(0, waiter), philo_lock(0, philo), NULL);
+		}
+		philo_lock(0, philo);
+		go_eat(philo);
 		ft_log(waiter, SLEEP, philo->id, waiter->tts);
+		ft_log(waiter, THINK, philo->id, 0);
 	}
+	waiter_lock(0, waiter);
 	return (NULL);
 }

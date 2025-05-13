@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:26:22 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/13 11:43:39 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/13 18:16:59 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef enum e_state
 typedef struct s_fork
 {
 	pthread_mutex_t	mutex;
-	int				created_m;
+	int				created;
 	int				id;
 	struct s_waiter	*waiter;
 }					t_fork;
@@ -53,11 +53,13 @@ typedef struct s_philo
 	t_fork			*fork[2];
 	pthread_t		thread;
 	int				created_t;
+	int				eaten_enough;
 	int				is_dead;
 	long			meal_count;
 	long			last_meal;
-	pthread_mutex_t	last_meal_mutex;
+	pthread_mutex_t	mutex;
 	int				created_m;
+	int				lock;
 	struct s_waiter	*waiter;
 }					t_philo;
 
@@ -73,18 +75,17 @@ typedef struct s_waiter
 	int				ttd;
 	int				tte;
 	int				tts;
-	int				ttt;
 	int				mml;
+	int				nb_eaten_enough;
 	int				start;
-	pthread_mutex_t	start_mutex;
-	int				created_m_s;
 	int				stop;
 	long			time;
 	long			start_time;
+	pthread_mutex_t	mutex;
+	int				lock;
+	int				created;
 	t_philo			**philo;
 	t_fork			**fork;
-	pthread_mutex_t	print_mutex;
-	int				created_m_p;
 }					t_waiter;
 
 /**========================================================================
@@ -97,6 +98,7 @@ int		end(t_waiter *waiter, t_philo **philo, t_fork **fork);
 void	*routine(void *arg);
 long	get_time();
 int		ft_log(t_waiter *waiter, t_state state, int philo_id, int waiting);
+void	wait_start(t_waiter *waiter);
 
 /**========================================================================
  **							UTILS
@@ -107,7 +109,6 @@ int		ft_strlen(char *str);
 int		ft_cmpstr(char *s1, char *s2);
 void	*ft_calloc(size_t nmemb, size_t size);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-void	ft_putnbr(long nb);
 
 /**========================================================================
  **							ERRORS HANDLING
