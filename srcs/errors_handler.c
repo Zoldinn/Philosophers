@@ -6,13 +6,13 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:22:08 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/13 17:49:34 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/19 16:19:35 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-// print str in red
+// print str in red followed by a \n
 void	p_r(char *str)
 {
 	if (!str)

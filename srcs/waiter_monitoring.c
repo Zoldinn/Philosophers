@@ -1,22 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine.c                                          :+:      :+:    :+:   */
+/*   waiter_monitoring.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 19:05:03 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/13 17:40:25 by lefoffan         ###   ########.fr       */
+/*   Created: 2025/05/19 14:43:06 by lefoffan          #+#    #+#             */
+/*   Updated: 2025/05/19 15:38:08 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-// last meal 			: avant de manger
-// commencer starvation : juste apres manger
-//
-// doivent tous commencer en meme temps
-void	*routine(void *arg)
-{
-
-}

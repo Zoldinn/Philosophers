@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:18:50 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/04/23 16:58:09 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/19 15:54:43 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ int	ft_strlen(char *str)
 
 int	ft_atoi(char *nb)
 {
-	int	i;
-	int	res;
-	int	neg;
+	long	res;
+	int		neg;
+	int		i;
 
 	i = -1;
 	neg = 1;
@@ -66,18 +66,8 @@ int	ft_atoi(char *nb)
 		else if (nb[i] >= '0' && nb[i] <= '9')
 			res = (res * 10) + (nb[i] - '0');
 	}
+	if (res > INT_MAX || res < INT_MIN)
+		return (-1);
 	return (res * neg);
 }
 
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	void	*dst;
-
-	if (nmemb != 0 && size > (4294967295 / nmemb))
-		return (NULL);
-	dst = malloc(size * nmemb);
-	if (!dst)
-		return (NULL);
-	memset(dst, 0, nmemb * size);
-	return (dst);
-}
