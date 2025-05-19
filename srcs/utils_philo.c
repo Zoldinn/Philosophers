@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:07:40 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/13 17:50:26 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/19 20:26:11 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,48 @@ long	get_time()
 	return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 }
 
-int	ft_log(t_waiter *waiter, t_state state, int philo_id, int waiting)
+// Lock, int shared->data = value, and unlock
+void	set_shared(t_shared *shared, int value)
 {
-	pthread_mutex_lock(&waiter->mutex);
-	printf("%ld %ld", (get_time() - waiter->start_time), philo_id);
-	if (state == TAKE_A_FORK)
-		printf(" has taken a fork\n", 18);
-	else if (state == EAT)
-		printf(" is eating\n");
-	else if (state == THINK)
-		printf(" is thinking\n");
-	else if (state == SLEEP)
-		printf(" is sleeping\n");
-	else if (state == DIE)
-		printf(" died\n");
-	usleep(waiting * 1000);
-	pthread_mutex_unlock(&waiter->mutex);
-	return (0);
+	if (!shared || !shared->created)
+		return ;
+	pthread_mutex_lock(&shared->mutex);
+	shared->data = value;
+	pthread_mutex_unlock(&shared->mutex);
+}
+
+// Same as set_shared but set the long ldata value
+void	set_lshared(t_shared *shared, long value)
+{
+	if (!shared || !shared->created)
+		return ;
+	pthread_mutex_lock(&shared->mutex);
+	shared->ldata = value;
+	pthread_mutex_unlock(&shared->mutex);
+}
+
+// Lock, retourne la valeur int data de shared et unlock
+int	get_shared(t_shared *shared)
+{
+	int	value;
+
+	if (!shared || !shared->created)
+		return (0);
+	pthread_mutex_lock(&shared->mutex);
+	value = shared->data;
+	pthread_mutex_unlock(&shared->mutex);
+	return (value);
+}
+
+// Same as get_shared but for the long ldata
+long	get_lshared(t_shared *shared)
+{
+	long	value;
+
+	if (!shared || !shared->created)
+		return (0);
+	pthread_mutex_lock(&shared->mutex);
+	value = shared->ldata;
+	pthread_mutex_unlock(&shared->mutex);
+	return (value);
 }

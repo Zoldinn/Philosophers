@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:26:22 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/19 18:15:16 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/19 20:59:22 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ typedef struct s_philo
 	int				created_thread;
 
 	t_shared		meal_count;
-	t_shared		last_meal_time;
+	t_shared		last_meal_t;
+	t_shared		eaten_enough;
 
 	t_shared		*left_fork;
 	t_shared		*right_fork;
@@ -66,7 +67,7 @@ typedef struct s_waiter
 	int			tts;
 	int			mml;
 
-	long		start_time;
+	t_shared	start_t;
 	t_shared	stop;
 	t_shared	print;
 
@@ -80,10 +81,14 @@ typedef struct s_waiter
  *========================================================================**/
 int		init(t_waiter *waiter, char **av);
 void	destroy_all(t_waiter *waiter);
+void	set_shared(t_shared *shared, int value);
+void	set_lshared(t_shared *shared, long value);
+int		get_shared(t_shared *shared);
+long	get_lshared(t_shared *shared);
+long	get_time();
+void	ft_log(int philo_id, t_waiter *waiter, char *str);
 
 void	*routine(void *arg);
-long	get_time();
-int		ft_log(t_waiter *waiter, t_state state, int philo_id, int waiting);
 void	wait_start(t_waiter *waiter);
 
 /**========================================================================

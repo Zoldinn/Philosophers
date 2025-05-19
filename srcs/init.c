@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:45:16 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/19 18:16:18 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/19 21:01:43 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ static int	init_philos(t_waiter *waiter)
 		philo = &waiter->philos[i];
 		philo->id = i + 1;
 		if (init_shared(&philo->meal_count, 0, 0) != 0
-			|| init_shared(&philo->last_meal_time, 0, 0) != 0)
+			|| init_shared(&philo->last_meal_t, 0, 0) != 0
+			|| init_shared(&philo->eaten_enough, 0, 0) != 0)
 			return (1);
 	}
 	return (0);
@@ -102,9 +103,11 @@ int	init(t_waiter *waiter, char **av)
 		waiter->mml = ft_atoi(av[5]);
 	if (init_shared(&waiter->stop, 0, 0) != 0
 		|| init_shared(&waiter->print, 0, 0) != 0
+		|| init_shared(&waiter->start_t, 0, 0) != 0
 		|| init_philos(waiter) != 0
 		|| init_forks(waiter) != 0
 		|| start_threads(waiter) != 0)
 		return (1);
+	set_lshared(&waiter->start_t, get_time());
 	return (0);
 }
