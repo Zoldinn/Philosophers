@@ -6,16 +6,41 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:43:06 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/19 21:02:33 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/20 10:00:30 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-int waiter_monitoring(t_waiter *waiter)
+int	check_dead(t_philo *phil, t_waiter *waiter)
+{
+	long	t;
+
+	t = get_lshared(&phil->last_meal_t) - get_lshared(&waiter->start_t);
+	if (t > waiter->ttd)
+	{
+		set_shared(&waiter->stop, 1);
+		ft_log(phil->id, waiter, "died");
+		return (1);
+	}
+	return (0);
+}
+
+int	check_eat_count(t_philo *phil, t_waiter *waiter)
+{
+	if (get_shared(&phil->eaten_enough) != 1 && waiter->mml > 0
+		&& get_shared(&phil->meal_count) >= waiter->mml)
+	{
+		set_shared(&waiter->stop, 1);
+		set_shared(&phil->eaten_enough, 1);
+		return (1);
+	}
+	return (0);
+}
+
+void waiter_monitoring(t_waiter *waiter)
 {
 	t_philo	*phil;
-	long	t;
 	int		i;
 	int		nbp_satisfied;
 
@@ -26,14 +51,10 @@ int waiter_monitoring(t_waiter *waiter)
 		while (++i < waiter->nbp)
 		{
 			phil = &(waiter->philos[i]);
-			t = get_lshared(&phil->last_meal_t) - get_lshared(&waiter->start_t);
-			if (t > waiter->ttd)
-			{
-				set_shared(&waiter->stop, 1);
-				ft_log(phil->id, waiter, "died");
+			if (check_dead(phil, waiter) == 1)
 				break ;
-			}
-			if (phil->meal_count) // just added shared eaten enough
+			if (check_eat_count(phil, waiter) == 1)
+				break ;
 		}
 	}
 }
