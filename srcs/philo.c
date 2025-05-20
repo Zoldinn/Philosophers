@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:28:21 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/19 20:50:22 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/20 10:42:38 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,14 @@
 
 void	ft_log(int philo_id, t_waiter *waiter, char *str)
 {
-	t_shared	*print;
-	t_shared	*start_t;
+	long		t;
 
-	print = &waiter->print;
-	start_t = &waiter->start_t;
-	if (!print || !print->created)
+	if (!waiter->print.created)
 		return ;
-	pthread_mutex_lock(&start_t->mutex);
-	printf("%ld %d ", get_time() - start_t->ldata, philo_id);
-	pthread_mutex_lock(&print->mutex);
-	printf("%s\n", str);
-	pthread_mutex_unlock(&start_t->mutex);
-	pthread_mutex_unlock(&print->mutex);
+	t = get_time() - get_lshared(&waiter->start_t);
+	pthread_mutex_lock(&waiter->print.mutex);
+	printf("%ld %d %s\n", t, philo_id, str);
+	pthread_mutex_unlock(&waiter->print.mutex);
 }
 
 int	main(int ac, char **av)

@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:07:24 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/19 21:01:38 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/20 10:48:59 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static void destroy_philos(t_waiter *waiter)
 			pthread_mutex_destroy(&waiter->philos[i].meal_count.mutex);
 		if (waiter->philos[i].last_meal_t.created)
 			pthread_mutex_destroy(&waiter->philos[i].last_meal_t.mutex);
-		if (waiter->philos[i].eaten_enough.created)
-			pthread_mutex_destroy(&waiter->philos[i].eaten_enough.mutex);
+		if (waiter->philos[i].eat_enough.created)
+			pthread_mutex_destroy(&waiter->philos[i].eat_enough.mutex);
 	}
 	free(waiter->philos);
 }

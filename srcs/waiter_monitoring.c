@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:43:06 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/20 10:00:30 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/20 11:03:34 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ int	check_dead(t_philo *phil, t_waiter *waiter)
 
 int	check_eat_count(t_philo *phil, t_waiter *waiter)
 {
-	if (get_shared(&phil->eaten_enough) != 1 && waiter->mml > 0
+	if (get_shared(&phil->eat_enough) != 1 && waiter->mml > 0
 		&& get_shared(&phil->meal_count) >= waiter->mml)
 	{
 		set_shared(&waiter->stop, 1);
-		set_shared(&phil->eaten_enough, 1);
+		set_shared(&phil->eat_enough, 1);
 		return (1);
 	}
 	return (0);
@@ -56,5 +56,6 @@ void waiter_monitoring(t_waiter *waiter)
 			if (check_eat_count(phil, waiter) == 1)
 				break ;
 		}
+		usleep(1000);
 	}
 }
