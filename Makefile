@@ -13,7 +13,8 @@ SRC = end.c \
 	philo.c \
 	routine.c \
 	utils_func.c \
-	utils_philo.c
+	utils_philo.c \
+	waiter_monitoring.c
 
 # Ajout des préfixes de dossiers
 SRC := $(addprefix $(SRC_DIR)/, $(SRC))

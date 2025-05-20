@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:07:24 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/20 10:48:59 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/20 11:48:45 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ static void	destroy_forks(t_waiter *waiter)
 
 void	destroy_all(t_waiter *waiter)
 {
-	int	i;
-
 	if (waiter->philos)
 		destroy_philos(waiter);
 	if (waiter->forks)

@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:43:06 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/20 11:03:34 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/20 11:55:00 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_dead(t_philo *phil, t_waiter *waiter)
 	if (t > waiter->ttd)
 	{
 		set_shared(&waiter->stop, 1);
-		ft_log(phil->id, waiter, "died");
+		ft_log(phil->id, waiter, "\e[31mdied\e[0m");
 		return (1);
 	}
 	return (0);

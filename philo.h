@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:26:22 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/20 11:20:59 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/20 11:48:24 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # define GREEN "\e[32m"
 # define YELLOW "\e[33m"
 
-# include <bits/pthreadtypes.h>
 # include <stdio.h>
 # include <string.h>
 # include <stdlib.h>
