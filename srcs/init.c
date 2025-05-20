@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:45:16 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/20 13:06:38 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/20 17:24:31 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,5 @@ int	init(t_waiter *waiter, char **av)
 		|| init_forks(waiter) != 0
 		|| start_threads(waiter) != 0)
 		return (1);
-	set_lshared(&waiter->start_t, get_time());
 	return (0);
 }
