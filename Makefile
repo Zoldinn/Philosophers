@@ -14,6 +14,7 @@ SRC = end.c \
 	routine.c \
 	utils_func.c \
 	utils_philo.c \
+	utils_philo2.c \
 	waiter_monitoring.c
 
 # Ajout des préfixes de dossiers

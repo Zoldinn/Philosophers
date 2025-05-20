@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:45:16 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/20 10:48:59 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:06:38 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	init_philos(t_waiter *waiter)
 		philo->waiter = waiter;
 		if (init_shared(&philo->meal_count, 0, 0) != 0
 			|| init_shared(&philo->last_meal_t, 0, 0) != 0
-			|| init_shared(&philo->eat_enough, 0, 0) != 0)
+			|| init_shared(&philo->enough, 0, 0) != 0)
 			return (1);
 	}
 	return (0);

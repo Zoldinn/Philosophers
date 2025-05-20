@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:43:06 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/20 11:55:00 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/20 16:05:47 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_dead(t_philo *phil, t_waiter *waiter)
 {
 	long	t;
 
-	t = get_lshared(&phil->last_meal_t) - get_lshared(&waiter->start_t);
+	t = now(waiter) - get_lshared(&phil->last_meal_t);	
 	if (t > waiter->ttd)
 	{
 		set_shared(&waiter->stop, 1);
@@ -26,14 +26,17 @@ int	check_dead(t_philo *phil, t_waiter *waiter)
 	return (0);
 }
 
-int	check_eat_count(t_philo *phil, t_waiter *waiter)
+int	check_eat_count(t_philo *phil, t_waiter *waiter, int *nbp_satisfied)
 {
-	if (get_shared(&phil->eat_enough) != 1 && waiter->mml > 0
-		&& get_shared(&phil->meal_count) >= waiter->mml)
+	if (waiter->mml > 0 && get_shared(&phil->meal_count) >= waiter->mml)
 	{
-		set_shared(&waiter->stop, 1);
-		set_shared(&phil->eat_enough, 1);
-		return (1);
+		if (get_shared(&phil->enough) != 1)
+		{
+			set_shared(&phil->enough, 1);
+			*nbp_satisfied += 1;
+		}
+		if (*nbp_satisfied == waiter->nbp)
+			return (set_shared(&waiter->stop, 1), 1);
 	}
 	return (0);
 }
@@ -45,6 +48,8 @@ void waiter_monitoring(t_waiter *waiter)
 	int		nbp_satisfied;
 
 	nbp_satisfied = 0;
+	while (get_lshared(&waiter->start_t) == 0)
+		usleep(100);
 	while (get_shared(&waiter->stop) != 1)
 	{
 		i = -1;
@@ -53,9 +58,9 @@ void waiter_monitoring(t_waiter *waiter)
 			phil = &(waiter->philos[i]);
 			if (check_dead(phil, waiter) == 1)
 				break ;
-			if (check_eat_count(phil, waiter) == 1)
+			if (check_eat_count(phil, waiter, &nbp_satisfied) == 1)
 				break ;
 		}
-		usleep(1000);
+		usleep(100);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:26:22 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/20 11:48:24 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:37:23 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_philo
 
 	t_shared		meal_count;
 	t_shared		last_meal_t;
-	t_shared		eat_enough;
+	t_shared		enough;
 
 	t_shared		*left_fork;
 	t_shared		*right_fork;
@@ -90,8 +90,8 @@ void	increment_shared(t_shared *shared);
 long	get_time();
 void	ft_log(int philo_id, t_waiter *waiter, char *str);
 void 	waiter_monitoring(t_waiter *waiter);
-
 void	*routine(void *arg);
+long	now(t_waiter *waiter);
 
 /**========================================================================
  **									UTILS
