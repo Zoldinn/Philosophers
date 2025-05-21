@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:07:40 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/19 20:26:11 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/21 12:12:16 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 // return the time is ms (milisec)
 // to have actual time (time start - actual time)
-long	get_time()
+long	get_time(void)
 {
-	struct timeval tv;
-	
+	struct timeval	tv;
+
 	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
 // Lock, int shared->data = value, and unlock

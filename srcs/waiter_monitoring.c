@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:43:06 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/20 19:06:09 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/21 12:12:26 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@ int	check_dead(t_philo *phil, t_waiter *waiter)
 {
 	long	t;
 
-	// printf("last meal = %ld\n", phil->last_meal_t.ldata);
-	// printf("now = %ld\n", now(waiter));
 	t = now(waiter) - get_lshared(&phil->last_meal_t);
-	// printf("t = %ld\n", t);
 	if (t > waiter->ttd)
 	{
 		set_shared(&waiter->stop, 1);
@@ -44,7 +41,7 @@ int	check_eat_count(t_philo *phil, t_waiter *waiter, int *nbp_satisfied)
 	return (0);
 }
 
-void waiter_monitoring(t_waiter *waiter)
+void	waiter_monitoring(t_waiter *waiter)
 {
 	t_philo	*phil;
 	int		i;

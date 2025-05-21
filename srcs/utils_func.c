@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:18:50 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/19 15:54:43 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/21 12:11:49 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,10 @@ int	ft_atoi(char *nb)
 			neg *= -1;
 		else if (nb[i] >= '0' && nb[i] <= '9')
 			res = (res * 10) + (nb[i] - '0');
+		else if (nb[i] != '+' || (nb[i] == '+' && i != 0))
+			return (-1);
 	}
 	if (res > INT_MAX || res < INT_MIN)
 		return (-1);
 	return (res * neg);
 }
-

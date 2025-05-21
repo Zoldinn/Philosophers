@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 19:05:03 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/20 19:05:44 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/21 10:46:58 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	one_philo(t_philo *phil)
 {
 	ft_log(phil->id, phil->waiter, "has taken a fork");
 	set_lshared(&phil->last_meal_t, now(phil->waiter));
-	usleep(phil->waiter->tte * 1000);
 }
 
 void	*routine(void *arg)

@@ -6,7 +6,7 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:26:22 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/20 13:37:23 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/21 11:07:09 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ void	set_lshared(t_shared *shared, long value);
 int		get_shared(t_shared *shared);
 long	get_lshared(t_shared *shared);
 void	increment_shared(t_shared *shared);
-long	get_time();
+long	get_time(void);
 void	ft_log(int philo_id, t_waiter *waiter, char *str);
-void 	waiter_monitoring(t_waiter *waiter);
+void	waiter_monitoring(t_waiter *waiter);
 void	*routine(void *arg);
 long	now(t_waiter *waiter);
 

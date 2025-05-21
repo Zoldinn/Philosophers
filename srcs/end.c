@@ -6,13 +6,13 @@
 /*   By: lefoffan <lefoffan@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:07:24 by lefoffan          #+#    #+#             */
-/*   Updated: 2025/05/20 13:06:38 by lefoffan         ###   ########.fr       */
+/*   Updated: 2025/05/21 11:07:48 by lefoffan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-static void destroy_philos(t_waiter *waiter)
+static void	destroy_philos(t_waiter *waiter)
 {
 	int	i;
 
